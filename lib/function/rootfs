@@ -1,19 +1,25 @@
 #!/bin/bash
 
 sysroot_partition(){
+# IMAGE_LOOP_DEV="$(losetup --show -P -f ${ROOTFS_FOLDER}${RELEASE_NAME})"
+# if [ -e "${IMAGE_LOOP_DEV}"]
+#  then losetup --detach "${IMAGE_LOOP_DEV}"
+# fi
 truncate -s 2048MB "${ROOTFS_FOLDER}${RELEASE_NAME}"
+#IMAGE_LOOP_DEV="$(losetup -fP --show ${ROOTFS_FOLDER}${RELEASE_NAME})"
 echo -e "o
 n
 p
 1
 2048
+3906249
 a
 t
 b
-3906249
-
 p
 w" | fdisk "${ROOTFS_FOLDER}${RELEASE_NAME}"
+#w" | fdisk "${IMAGE_LOOP_DEV}"
+
 IMAGE_LOOP_DEV="$(losetup --show -P -f ${ROOTFS_FOLDER}${RELEASE_NAME})"
 IMAGE_LOOP_DEV_ROOTFS="${IMAGE_LOOP_DEV}p1"
 partprobe "${IMAGE_LOOP_DEV}"

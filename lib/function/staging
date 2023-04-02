@@ -37,6 +37,7 @@ if [[ "$GPT" == "true" ]]; then
 		mkpart 1 ext2 16MiB 100%
 	fi
 else
+	IMAGE_LOOP_DEV="$(losetup -fP --show ${IMAGE_FOLDER}${IMAGE_FILE_NAME})"
 	echo -e "o
 	n
 	p
@@ -48,9 +49,9 @@ else
 	5999999
 
 	p
-	w" | fdisk "${IMAGE_FOLDER}${IMAGE_FILE_NAME}"
+	w" | fdisk "${IMAGE_LOOP_DEV}"
 fi
-IMAGE_LOOP_DEV="$(losetup --show -P -f ${IMAGE_FOLDER}${IMAGE_FILE_NAME})"
+# IMAGE_LOOP_DEV="$(losetup --show -P -f ${IMAGE_FOLDER}${IMAGE_FILE_NAME})"
 IMAGE_LOOP_DEV_ROOTFS="${IMAGE_LOOP_DEV}${P_ROOTFS}"
 partprobe "${IMAGE_LOOP_DEV}"
 mkdir -p ${P_ROOTFS}

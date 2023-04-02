@@ -53,7 +53,10 @@ if [ $DEVROOTFS -eq 1 ]; then
 	fi
 fi
 mkdir -p ${ROOT}/usr/bin
-cp $(command -v "${STATIC}") ${ROOT}/usr/bin;
+# if [[!`uname -m | grep -q "armv7l"`]]; then
+#  cp $(command -v "${STATIC}") ${ROOT}/usr/bin;
+# fi
+#cp $(command -v "${STATIC}") ${ROOT}/usr/bin; # 2>/dev/null 
 run_debootstrap
 
 # developer tarball
