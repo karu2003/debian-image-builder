@@ -11,8 +11,15 @@ RUN apt update \
     && apt install -y --no-install-recommends \
         sudo \
         ca-certificates \
-        netbase apt-utils \
-        make fdisk parted udev debootstrap pv xz-utils \         
+        netbase apt-utils iputils-ping curl \
+        build-essential bison bc git dialog patch dosfstools zip unzip parted nano util-linux hdparm \
+        debootstrap rsync kmod cpio flex libssl-dev libncurses5-dev \
+        device-tree-compiler libfdt-dev python3-distutils python3-dev swig fakeroot \
+        lzop lz4 aria2 pv u-boot-tools \
+        distro-info-data lsb-release libelf-dev fdisk kpartx ccache xz-utils \
+        python-is-python2 python-dev-is-python2 zstd \
+        colorized-logs gdisk jq wget btrfs-progs xfsprogs \
+	    python3-setuptools \         
     && apt-get clean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*

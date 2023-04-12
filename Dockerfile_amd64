@@ -1,0 +1,27 @@
+ARG IMAGE_TAG=bullseye-slim
+FROM debian:$IMAGE_TAG AS base
+
+ARG DEBIAN_FRONTEND=noninteractive
+ONBUILD ARG DEBIAN_FRONTEND=noninteractive
+
+# Upgrade & install required packages
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y --no-install-recommends \
+        sudo \
+        ca-certificates \
+        netbase apt-utils iputils-ping curl \
+        build-essential bison bc git dialog patch dosfstools zip unzip qemu parted nano util-linux hdparm \
+        debootstrap qemu-user-static binfmt-support rsync kmod cpio flex libssl-dev libncurses5-dev \
+        device-tree-compiler libfdt-dev python3-distutils python3-dev swig fakeroot \
+        lzop lz4 aria2 pv crossbuild-essential-arm64 crossbuild-essential-armhf u-boot-tools \
+        distro-info-data lsb-release libelf-dev fdisk kpartx ccache xz-utils gcc-9 gcc-10 \
+        python-is-python2 python-dev-is-python2 zstd gcc-arm-none-eabi gcc-9-arm-linux-gnueabihf \
+        gcc-9-aarch64-linux-gnu gcc-10-aarch64-linux-gnu gcc-10-arm-linux-gnueabihf \
+        colorized-logs gdisk jq wget btrfs-progs xfsprogs gcc-9-arm-linux-gnueabi \
+        gcc-10-arm-linux-gnueabi crossbuild-essential-armel python3-setuptools \         
+    && apt-get clean \
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
+CMD ["/bin/bash"]
